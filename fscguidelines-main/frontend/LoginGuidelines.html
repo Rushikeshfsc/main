@@ -1,0 +1,157 @@
+<html>
+<head>
+<style>
+#container{
+
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-content: center;
+text-align: center;
+margin-top: 60;
+width: 30%;
+height: 100%;
+margin-left: 35%;
+
+background-color: aqua;
+
+border-radius: 10px;
+
+
+}
+
+#innercontainer{
+display: flex;
+justify-content: center;
+align-items: center;
+height: 80%;
+width: 70%;
+margin-top: 80;
+border-radius: 10px;
+flex-direction: column;
+
+color: rgb(241, 123, 12);
+
+
+
+}
+
+
+body{margin: 0;
+    background-image: url('C:/Users/rushikesh/Downloads/wdnbackground.jpg');
+    
+
+}
+button{
+    width: 100%;
+    height: 35%;
+    margin-top: 20%;
+    background-color: blue;
+    color: white;
+    border-radius: 10px;
+
+}
+input{
+    border-radius: 6px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div id="container" >
+
+<div id="innercontainer" style="color: black;">
+
+<h1 style="color: rgb(52, 11, 71);"><b>ADMIN </b></h1>
+
+    <form id="loginForm" style="margin: 0;">
+
+        <label for="username" style="color: rgb(24, 7, 7);"><b>Username:</b></label>
+        <input type="text" id="username" name="username" placeholder="Enter your Username" required><br><br>
+        <label for="password" style="color: rgb(20, 10, 10);"><b>Password:</b></label>
+        <input type="password" id="password" name="password" placeholder="Enter your Password" required><br><br>
+    <button type="submit"  onclick="return handleLogin()">LOGIN</button>
+    </form>
+<!------------------------------------Starting of  Session Expiration Timer------------------------------------------->
+
+<script>
+    // Function to set session expiration time
+    function setSessionExpiration() {
+
+        // Set expiration time to 5 minutes (in milliseconds)
+        var expirationTime = 1* 60 * 1000; // 5 minutes
+        // Set a timer to expire the session
+        setTimeout(function() {
+
+            // After expiration time, clear session
+
+            alert("Session expired. Please log in again.");
+            clearSession();
+
+        }, expirationTime);
+    }
+
+    // Function to clear session
+    function clearSession() {
+        // Clear any session data or redirect to logout page
+        // For this example, we'll just reload the page
+
+        location.reload(href="LoginGuidelines.html");
+    }
+
+    // Function to handle login button click
+    function handleLogin() {
+        // Perform login process here, e.g., validate credentials
+        // For simplicity, let's assume login is successful
+       
+        alert("Login successful!");
+        // Set session expiration timer
+        setSessionExpiration();
+    }
+</script>
+
+
+<!-----------------------------------------------END of Session--------------------------------------------------------->
+    <div id="message"></div>
+    <script>
+
+    // Function to handle form submission
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Get username and password from form
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+
+        // Make a POST request to the Spring Boot API login endpoint
+        fetch("http://localhost:8080/admin/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ username: username, password: password })
+        })
+        .then(response => {
+            if (response.ok) {
+                // If login is successful, redirect to the next page
+                window.location.href = "nextpage.html"; // Replace with the URL of the next page
+            } else {
+                // If login fails, display an error message
+                alert("Login failed. You Have Entered Wrong Username or Password.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("An error occurred while logging in. Please try again later.");
+        });
+    });
+</script>
+</div>
+</div>
+<h3 style="text-align: center;">@2024 - 2025 Fluidscapes Consultants Pvt.Ltd</h3>
+</body>
+</html>
